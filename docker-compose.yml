@@ -1,0 +1,27 @@
+---
+
+version: '3.8'
+services:
+  db_dotinstall:
+    build: ./mysql
+    platform: linux/amd64
+    environment:
+      TZ: "Asia/Tokyo"
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: myappuser
+      MYSQL_PASSWORD: myapppass
+    volumes:
+    - db-data:/var/lib/mysql
+  php_dotinstall:
+    build: ./php
+    platform: linux/amd64
+    depends_on:
+    - db
+    ports:
+    - 8562:8000
+    volumes:
+    - ./work:/work
+
+volumes:
+  db-data:
