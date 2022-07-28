@@ -20,6 +20,11 @@ try {
   exit;
 }
 
+// htmlspecialcharsを導入
+function h($str) {
+  return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+
 // Todoリスト一覧を取得
 function getTodos($pdo) {
   $stmt = $pdo->query("select * from todos order by id desc");
@@ -43,15 +48,15 @@ $todos = getTodos($pdo);
   <h1>Todos</h1>
 
   <ul>
-    <li>
-      <input type="checkbox"><span>Title</span>
-    </li>
-    <li>
-      <input type="checkbox" checked><span class="done">Title</span>
-    </li>
-    <li>
-      <input type="checkbox"><span>Title</span>
-    </li>
+    <!-- DBから取得したTodoリストを表示 -->
+    <?php foreach ($todos as $todo): ?>
+      <li>
+        <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
+        <span class="<?= $todo->is_done ? 'done' : '' ?>">
+          <?= h($todo->title); ?>
+        </span>
+      </li>
+    <?php endforeach; ?>
   </ul>
 </body>
 </html>
