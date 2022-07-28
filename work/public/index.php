@@ -11,12 +11,24 @@ try {
     DB_PASS,
     [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+      PDO::ATTR_EMULATE_PREPARES => false,
     ]
   );
 } catch (PDOException $e) {
   echo $e->getMessage();
   exit;
 }
+
+// Todoリスト一覧を取得
+function getTodos($pdo) {
+  $stmt = $pdo->query("select * from todos order by id desc");
+  $todos = $stmt->fetchAll();
+  return $todos;
+}
+
+// Todoリスト一覧を呼び出す
+$todos = getTodos($pdo);
 
 ?>
 
