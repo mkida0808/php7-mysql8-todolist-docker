@@ -47,6 +47,11 @@ $todos = getTodos($pdo);
 <body>
   <h1>Todos</h1>
 
+  <form action="" method="post">
+    <input type="text" name="title" placeholder="Type new todo.">
+    <!-- <button>Add</button> -->
+  </form>
+
   <ul>
     <!-- DBから取得したTodoリストを表示 -->
     <?php foreach ($todos as $todo): ?>
