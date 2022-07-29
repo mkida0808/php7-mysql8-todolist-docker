@@ -19,6 +19,16 @@ function validateToken() {
   }
 }
 
+// Todoリスト一覧のタイトル更新処理
+function toggleTodo($pdo) {
+  $id = filter_input(INPUT_POST, 'id');
+  if (empty($id)) return;
+
+  $stmt = $pdo->prepare("UPDATE todos SET is_done = NOT is_done WHERE id = :id");
+  $stmt->bindValue('id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
+
 // Todoリスト一覧に新規レコードを追加
 function addTodo($pdo) {
   // 入力フォームから入力タイトルを取得する
