@@ -2,38 +2,11 @@
 
 require_once(__DIR__ . '/../app/config.php');
 
-Token::create();
-
 $pdo = Database::getInstance();
 
-// Todoリスト一覧にタイトルを追加関数、または既存タイトルの更新処理を呼び出す
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  Token::validate();
-  $action = filter_input(INPUT_GET, 'action');
-
-  switch ($action) {
-    case 'add':
-      addTodo($pdo);
-      break;
-    case 'toggle':
-      toggleTodo($pdo);
-      break;
-    case 'delete':
-      deleteTodo($pdo);
-      break;
-    default:
-      exit;
-  }
-
-
-  // 再読み込みの際にpostされないようにトップにリダイレクトする
-  // SITE_URLはSERVER変数から取得する
-  header('Location: SITE_URL');
-  exit;
-}
-
-// Todoリスト一覧を呼び出す
-$todos = getTodos($pdo);
+$todo = new Todo($pdo);
+$todo->processPost();
+$todos = $todo->getAll();
 
 ?>
 
