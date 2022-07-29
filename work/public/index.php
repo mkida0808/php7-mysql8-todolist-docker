@@ -9,7 +9,17 @@ $pdo = getPdoInstance();
 // Todoリスト一覧にタイトルを追加関数を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   validateToken();
-  addTodo($pdo);
+  $action = filter_input(INPUT_GET, 'action');
+
+  switch ($action) {
+    case 'add':
+      addTodo($pdo);
+      break;
+    case 'toggle':
+      toggleTodo($pdo);
+      break;
+  }
+
 
   // 再読み込みの際にpostされないようにトップにリダイレクトする
   // SITE_URLはSERVER変数から取得する
@@ -32,7 +42,7 @@ $todos = getTodos($pdo);
 <body>
   <h1>Todos</h1>
 
-  <form action="" method="post">
+  <form action="?action=add" method="post">
     <input type="text" name="title" placeholder="Type new todo.">
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     <!-- <button>Add</button> -->
@@ -42,7 +52,7 @@ $todos = getTodos($pdo);
     <!-- DBから取得したTodoリストを表示 -->
     <?php foreach ($todos as $todo): ?>
       <li>
-        <form action="" method="post">
+        <form action="?action=toggle" method="post">
           <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
           <!-- どのidの更新を行うかのためidを送信 -->
           <input type="hidden" name="id" value="<?= h($todo->id); ?>">
