@@ -2,13 +2,13 @@
 
 require_once(__DIR__ . '/../app/config.php');
 
-createToken();
+Token::create();
 
 $pdo = getPdoInstance();
 
 // Todoリスト一覧にタイトルを追加関数、または既存タイトルの更新処理を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  validateToken();
+  Token::validate();
   $action = filter_input(INPUT_GET, 'action');
 
   switch ($action) {

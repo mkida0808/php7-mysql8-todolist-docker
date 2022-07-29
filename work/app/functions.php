@@ -5,20 +5,6 @@ function h($str) {
   return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
-// ランダム文字列でトークンを作成
-function createToken() {
-  if (!isset($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
-  }
-}
-
-// トークンのバリデーション検証
-function validateToken() {
-  if (empty($_SESSION['token']) || $_SESSION['token'] !== filter_input(INPUT_POST, 'token')) {
-    exit('Invalid post request');
-  }
-}
-
 // Todoリスト一覧のタイトル更新処理
 function toggleTodo($pdo) {
   $id = filter_input(INPUT_POST, 'id');
