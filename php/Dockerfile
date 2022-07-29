@@ -5,9 +5,14 @@ RUN apk --update add tzdata && \
     apk del tzdata && \
     rm -rf /var/cache/apk/*
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring
+RUN apk add autoconf build-base
+
+RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring && \
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug
 
 COPY php.ini-development /usr/local/etc/php/php.ini
+COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 WORKDIR /work
 
