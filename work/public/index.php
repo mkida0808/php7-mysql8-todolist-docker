@@ -3,6 +3,8 @@
 define('DSN', 'mysql:host=db_dotinstall;dbname=myapp;charset=utf8mb4');
 define('DB_USER', 'myappuser');
 define('DB_PASS', 'myapppass');
+// サーバー変数からサイトURL（ドメイン）を取得、定義する
+define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 
 try {
   $pdo = new PDO(
@@ -46,6 +48,11 @@ function getTodos($pdo) {
 // Todiリスト一覧にタイトルを追加関数を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   addTodo($pdo);
+
+  // 再読み込みの際にpostされないようにトップにリダイレクトする
+  // SITE_URLはSERVER変数から取得する
+  header('Location: SITE_URL');
+  exit;
 }
 
 // Todoリスト一覧を呼び出す
