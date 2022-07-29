@@ -6,7 +6,7 @@ createToken();
 
 $pdo = getPdoInstance();
 
-// Todiリスト一覧にタイトルを追加関数を呼び出す
+// Todoリスト一覧にタイトルを追加関数を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   validateToken();
   addTodo($pdo);
@@ -42,7 +42,12 @@ $todos = getTodos($pdo);
     <!-- DBから取得したTodoリストを表示 -->
     <?php foreach ($todos as $todo): ?>
       <li>
-        <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
+        <form action="" method="post">
+          <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
+          <!-- どのidの更新を行うかのためidを送信 -->
+          <input type="hidden" name="id" value="<?= h($todo->id); ?>">
+          <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+        </form>
         <span class="<?= $todo->is_done ? 'done' : '' ?>">
           <?= h($todo->title); ?>
         </span>
