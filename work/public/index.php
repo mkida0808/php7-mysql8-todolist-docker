@@ -45,37 +45,39 @@ $todos = getTodos($pdo);
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Todos</h1>
+  <main>
+    <h1>Todos</h1>
 
-  <form action="?action=add" method="post">
-    <input type="text" name="title" placeholder="Type new todo.">
-    <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-    <!-- <button>Add</button> -->
-  </form>
+    <form action="?action=add" method="post">
+      <input type="text" name="title" placeholder="Type new todo.">
+      <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+      <!-- <button>Add</button> -->
+    </form>
 
-  <ul>
-    <!-- DBから取得したTodoリストを表示 -->
-    <?php foreach ($todos as $todo): ?>
-      <li>
-        <form action="?action=toggle" method="post">
-          <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
-          <!-- どのidの更新を行うかのためidを送信 -->
-          <input type="hidden" name="id" value="<?= h($todo->id); ?>">
-          <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-        </form>
-        <span class="<?= $todo->is_done ? 'done' : '' ?>">
-          <?= h($todo->title); ?>
-        </span>
+    <ul>
+      <!-- DBから取得したTodoリストを表示 -->
+      <?php foreach ($todos as $todo): ?>
+        <li>
+          <form action="?action=toggle" method="post">
+            <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
+            <!-- どのidの更新を行うかのためidを送信 -->
+            <input type="hidden" name="id" value="<?= h($todo->id); ?>">
+            <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+          </form>
+          <span class="<?= $todo->is_done ? 'done' : '' ?>">
+            <?= h($todo->title); ?>
+          </span>
 
-        <form action="?action=delete" method="post">
-          <span class="delete">x</span>
-          <!-- どのidの更新を行うかのためidを送信 -->
-          <input type="hidden" name="id" value="<?= h($todo->id); ?>">
-          <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-        </form>
-      </li>
-    <?php endforeach; ?>
-  </ul>
+          <form action="?action=delete" method="post" class="delete-form">
+            <span class="delete">x</span>
+            <!-- どのidの更新を行うかのためidを送信 -->
+            <input type="hidden" name="id" value="<?= h($todo->id); ?>">
+            <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+          </form>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </main>
 
   <script src="js/main.js"></script>
 </body>
