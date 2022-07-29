@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../app/config.php');
 
 Token::create();
 
-$pdo = getPdoInstance();
+$pdo = Database::getInstance();
 
 // Todoリスト一覧にタイトルを追加関数、または既存タイトルの更新処理を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {

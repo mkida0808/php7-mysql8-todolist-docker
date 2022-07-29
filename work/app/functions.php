@@ -1,10 +1,5 @@
 <?php
 
-// htmlspecialcharsを導入
-function h($str) {
-  return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
-}
-
 // Todoリスト一覧のタイトル更新処理
 function toggleTodo($pdo) {
   $id = filter_input(INPUT_POST, 'id');
@@ -43,22 +38,3 @@ function getTodos($pdo) {
   return $todos;
 }
 
-// PDOインスタンス生成
-function getPdoInstance() {
-  try {
-    $pdo = new PDO(
-      DSN,
-      DB_USER,
-      DB_PASS,
-      [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-        PDO::ATTR_EMULATE_PREPARES => false,
-      ]
-    );
-    return $pdo;
-  } catch (PDOException $e) {
-    echo $e->getMessage();
-    exit;
-  }
-}
