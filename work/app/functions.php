@@ -29,6 +29,16 @@ function toggleTodo($pdo) {
   $stmt->execute();
 }
 
+// Todoリスト一覧のタイトル削除処理
+function deleteTodo($pdo) {
+  $id = filter_input(INPUT_POST, 'id');
+  if (empty($id)) return;
+
+  $stmt = $pdo->prepare("DELETE FROM todos WHERE id = :id");
+  $stmt->bindValue('id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
+
 // Todoリスト一覧に新規レコードを追加
 function addTodo($pdo) {
   // 入力フォームから入力タイトルを取得する

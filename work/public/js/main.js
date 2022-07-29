@@ -17,6 +17,9 @@
   // リストタイトルの削除に対する送信制御
   deletes.forEach(span => {
     span.addEventListener('click', () => {
+      if (!confirm('Are you sure?')) {
+        return;
+      }
       span.parentNode.submit();
     });
   });
