@@ -6,7 +6,7 @@ createToken();
 
 $pdo = getPdoInstance();
 
-// Todoリスト一覧にタイトルを追加関数を呼び出す
+// Todoリスト一覧にタイトルを追加関数、または既存タイトルの更新処理を呼び出す
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   validateToken();
   $action = filter_input(INPUT_GET, 'action');
