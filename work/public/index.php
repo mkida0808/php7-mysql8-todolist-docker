@@ -61,6 +61,13 @@ $todos = getTodos($pdo);
         <span class="<?= $todo->is_done ? 'done' : '' ?>">
           <?= h($todo->title); ?>
         </span>
+
+        <form action="?action=delete" method="post">
+          <span class="delete">x</span>
+          <!-- どのidの更新を行うかのためidを送信 -->
+          <input type="hidden" name="id" value="<?= h($todo->id); ?>">
+          <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+        </form>
       </li>
     <?php endforeach; ?>
   </ul>

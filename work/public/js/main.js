@@ -10,4 +10,14 @@
       checkbox.parentNode.submit();
     });
   });
+
+  // 全ての削除要素を取得する
+  const deletes = document.querySelectorAll('.delete');
+
+  // リストタイトルの削除に対する送信制御
+  deletes.forEach(span => {
+    span.addEventListener('click', () => {
+      span.parentNode.submit();
+    });
+  });
 }
