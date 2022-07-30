@@ -29,6 +29,9 @@ class todo
         case 'delete':
           $this->delete();
           break;
+        case 'purge':
+          $this->purge();
+          break;
         default:
           exit;
       }
@@ -72,6 +75,12 @@ class todo
     $stmt = $this->pdo->prepare("INSERT INTO todos (title) VALUES (:title)");
     $stmt->bindValue('title', $title, \PDO::PARAM_STR);
     $stmt->execute();
+  }
+
+  // Todoリスト一覧の一括削除処理（チェックボックスにチェックがあるリスト）
+  private function purge()
+  {
+    $this->pdo->query("DELETE FROM todos WHERE is_done = 1");
   }
 
   // Todoリスト一覧を取得

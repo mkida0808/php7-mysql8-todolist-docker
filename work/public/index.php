@@ -28,7 +28,7 @@ $todos = $todo->getAll();
     <header>
       <h1>Todos</h1>
 
-      <!-- Todoリスト一覧の一括削除ボタン -->
+      <!-- Todoリスト一覧の一括削除ボタン（チェックボックスにチェックがあるリスト） -->
       <form action="?action=purge" method="post">
         <span class="purge">Purge</span>
         <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
