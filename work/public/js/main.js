@@ -7,7 +7,19 @@
   // チャックボックスへのチェックに対する送信制御
   checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
-      checkbox.parentNode.submit();
+      // checkbox.parentNode.submit();
+
+      // チェックボックスをクリックしてもページを再読み込みしないように変更
+      const url = '?action=toggle';
+      const options = {
+        method: 'POST',
+        body: new URLSearchParams({
+          id: checkbox.dataset.id,
+          token: checkbox.dataset.token,
+        }),
+      };
+      fetch(url, options);
+      checkbox.nextElementSibling.classList.toggle('done');
     });
   });
 
