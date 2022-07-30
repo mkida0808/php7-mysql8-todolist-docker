@@ -17,7 +17,7 @@ services:
     build: ./php
     platform: linux/amd64
     depends_on:
-    - db
+    - db_dotinstall
     ports:
     - 8562:8000
     volumes:
