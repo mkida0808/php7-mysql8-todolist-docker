@@ -1,5 +1,7 @@
 <?php
 
+namespace MyApp;
+
 class Token
 {
   // ランダム文字列でトークンを作成
