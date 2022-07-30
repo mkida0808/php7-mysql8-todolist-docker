@@ -23,4 +23,15 @@
       span.parentNode.submit();
     });
   });
+
+  // 一括削除要素を取得する
+  const purge = document.querySelector('.purge');
+
+  // リストタイトルの一括削除に対する送信制御
+  purge.addEventListener('click', () => {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+    purge.parentNode.submit();
+  });
 }
