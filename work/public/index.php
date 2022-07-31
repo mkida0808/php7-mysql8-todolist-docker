@@ -24,11 +24,12 @@ $todos = $todo->getAll();
 </head>
 
 <body>
-  <main>
+  <!-- トークン関連は一括で取得、送信する -->
+  <main data-token="<?= Utils::h($_SESSION['token']); ?>">
     <header>
       <h1>Todos</h1>
       <!-- Todoリスト一覧の一括削除ボタン（チェックボックスにチェックがあるリスト） -->
-      <span class="purge" data-token="<?= Utils::h($_SESSION['token']); ?>">Purge</span>
+      <span class="purge">Purge</span>
     </header>
 
     <form action="?action=add" method="post">
@@ -40,12 +41,12 @@ $todos = $todo->getAll();
       <!-- DBから取得したTodoリストを表示 -->
       <?php foreach ($todos as $todo) : ?>
         <li>
-          <input type="checkbox" data-id="<?= Utils::h($todo->id); ?>" data-token="<?= Utils::h($_SESSION['token']); ?>" <?= $todo->is_done ? 'checked' : '' ?>>
+          <input type="checkbox" data-id="<?= Utils::h($todo->id); ?>" <?= $todo->is_done ? 'checked' : '' ?>>
           <!-- チェックボックスのONOFFの画面振る舞いはCSSに移す  -->
           <span><?= Utils::h($todo->title); ?></span>
 
           <!-- タイトル削除のためのid, tokenをカスタムデータ属性に置き換えてJS制御にまわす  -->
-          <span class="delete" data-id="<?= Utils::h($todo->id); ?>" data-token="<?= Utils::h($_SESSION['token']); ?>">x</span>
+          <span class="delete" data-id="<?= Utils::h($todo->id); ?>">x</span>
 
         </li>
       <?php endforeach; ?>

@@ -1,6 +1,8 @@
 'use strict';
 
 {
+  const token = document.querySelector('main').dataset.token;
+
   // 全てのチェックボックスを取得
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
@@ -15,7 +17,7 @@
         method: 'POST',
         body: new URLSearchParams({
           id: checkbox.dataset.id,
-          token: checkbox.dataset.token,
+          token: token,
         }),
       };
       fetch(url, options);
@@ -35,7 +37,7 @@
         method: 'POST',
         body: new URLSearchParams({
           id: span.dataset.id,
-          token: span.dataset.token,
+          token: token,
         }),
       });
       span.parentNode.remove();
@@ -54,7 +56,7 @@
     fetch('?action=purge', {
       method: 'POST',
       body: new URLSearchParams({
-        token: purge.dataset.token,
+        token: token,
       }),
     });
     const lis = document.querySelectorAll('li');
