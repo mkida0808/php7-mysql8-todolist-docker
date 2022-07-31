@@ -32,10 +32,9 @@ $todos = $todo->getAll();
       <span class="purge">Purge</span>
     </header>
 
-    <form action="?action=add" method="post">
+    <!-- Todoリスト一覧に追加する入力フォーム（送信先や送信形式はJSで指定する） -->
+    <form>
       <input type="text" name="title" placeholder="Type new todo.">
-      <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-      <!-- <button>Add</button> -->
     </form>
     <ul>
       <!-- DBから取得したTodoリストを表示 -->
