@@ -40,13 +40,13 @@ $todos = $todo->getAll();
     <ul>
       <!-- DBから取得したTodoリストを表示 -->
       <?php foreach ($todos as $todo) : ?>
-        <li>
-          <input type="checkbox" data-id="<?= Utils::h($todo->id); ?>" <?= $todo->is_done ? 'checked' : '' ?>>
+        <li data-id="<?= Utils::h($todo->id); ?>">
+          <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
           <!-- チェックボックスのONOFFの画面振る舞いはCSSに移す  -->
           <span><?= Utils::h($todo->title); ?></span>
 
           <!-- タイトル削除のためのid, tokenをカスタムデータ属性に置き換えてJS制御にまわす  -->
-          <span class="delete" data-id="<?= Utils::h($todo->id); ?>">x</span>
+          <span class="delete">x</span>
 
         </li>
       <?php endforeach; ?>
