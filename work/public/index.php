@@ -48,12 +48,9 @@ $todos = $todo->getAll();
           <!-- チェックボックスのONOFFの画面振る舞いはCSSに移す  -->
           <span><?= Utils::h($todo->title); ?></span>
 
-          <form action="?action=delete" method="post" class="delete-form">
-            <span class="delete">x</span>
-            <!-- どのidの更新を行うかのためidを送信 -->
-            <input type="hidden" name="id" value="<?= Utils::h($todo->id); ?>">
-            <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-          </form>
+          <!-- タイトル削除のためのid, tokenをカスタムデータ属性に置き換えてJS制御にまわす  -->
+          <span class="delete" data-id="<?= Utils::h($todo->id); ?>" data-token="<?= Utils::h($_SESSION['token']); ?>">x</span>
+
         </li>
       <?php endforeach; ?>
     </ul>
