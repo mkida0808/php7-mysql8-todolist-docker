@@ -21,7 +21,9 @@ class todo
 
       switch ($action) {
         case 'add':
-          $this->add();
+          $id = $this->add();
+          header('Content-Type: application/json');
+          echo json_encode(['id' => $id]);
           break;
         case 'toggle':
           $this->toggle();
@@ -38,7 +40,7 @@ class todo
 
       // 再読み込みの際にpostされないようにトップにリダイレクトする
       // SITE_URLはSERVER変数から取得する
-      header('Location: SITE_URL');
+      // header('Location: SITE_URL');
       exit;
     }
   }
@@ -75,6 +77,8 @@ class todo
     $stmt = $this->pdo->prepare("INSERT INTO todos (title) VALUES (:title)");
     $stmt->bindValue('title', $title, \PDO::PARAM_STR);
     $stmt->execute();
+
+    return (int) $this->pdo->lastInsertId();
   }
 
   // Todoリスト一覧の一括削除処理（チェックボックスにチェックがあるリスト）

@@ -1,7 +1,36 @@
 'use strict';
 
 {
+  // トークンのデータを取得
   const token = document.querySelector('main').dataset.token;
+
+  // input要素を取得
+  const input = document.querySelector('[name="title"]');
+
+  input.focus();
+
+  function addTodo(id) {
+    
+  }
+
+  // formタグを取得してsubmitされたあとの処理
+  document.querySelector('form').addEventListener('submit', e => {
+    e.preventDefault();
+
+    fetch('?action=add', {
+      method: 'POST',
+      body: new URLSearchParams({
+        title: input.value,
+        token: token,
+      }),
+    })
+    .then(response => response.json())
+    .then(json => {
+      addTodo(json.id);
+    });
+    input.value = '';
+    input.focus();
+  });
 
   // 全てのチェックボックスを取得
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
