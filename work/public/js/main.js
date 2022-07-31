@@ -7,7 +7,39 @@
   // input要素を取得
   const input = document.querySelector('[name="title"]');
 
+  // ul様相を取得
+  const ul = document.querySelector('ul');
+
   input.focus();
+
+  ul.addEventListener('click', e => {
+    // チャックボックスへのチェックに対する送信制御
+    // チェックボックスをクリックしてもページを再読み込みしないように変更
+    if (e.target.type === 'checkbox') {
+      fetch('?action=toggle', {
+        method: 'POST',
+        body: new URLSearchParams({
+          id: e.target.parentNode.dataset.id,
+          token: token,
+        }),
+      });
+    }
+
+    // リストタイトルの一括削除に対する送信制御
+    if (e.target.classList.contains('delete')) {
+      if (!confirm('Are you sure?')) {
+        return;
+      }
+      fetch('?action=delete', {
+        method: 'POST',
+        body: new URLSearchParams({
+          id: e.target.parentNode.dataset.id,
+          token: token,
+        }),
+      });
+      e.target.parentNode.remove();
+    }
+  });
 
   function addTodo(id, titleValue) {
     const li = document.createElement('li');
@@ -44,33 +76,12 @@
         token: token,
       }),
     })
-    .then(response => response.json())
-    .then(json => {
-      addTodo(json.id, title);
-    });
+      .then(response => response.json())
+      .then(json => {
+        addTodo(json.id, title);
+      });
     input.value = '';
     input.focus();
-  });
-
-  // 全てのチェックボックスを取得
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-  // チャックボックスへのチェックに対する送信制御
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
-      // checkbox.parentNode.submit();
-
-      // チェックボックスをクリックしてもページを再読み込みしないように変更
-      const url = '?action=toggle';
-      const options = {
-        method: 'POST',
-        body: new URLSearchParams({
-          id: checkbox.parentNode.dataset.id,
-          token: token,
-        }),
-      };
-      fetch(url, options);
-    });
   });
 
   // 全ての削除要素を取得する
@@ -90,27 +101,6 @@
         }),
       });
       span.parentNode.remove();
-    });
-  });
-
-  // 一括削除要素を取得する
-  const purge = document.querySelector('.purge');
-
-  // リストタイトルの一括削除に対する送信制御
-  purge.addEventListener('click', () => {
-    if (!confirm('Are you sure?')) {
-      return;
-    }
-    // purge.parentNode.submit();
-    fetch('?action=purge', {
-      method: 'POST',
-      body: new URLSearchParams({
-        token: token,
-      }),
-    });
-    const lis = document.querySelectorAll('li');
-    lis.forEach(li => {
-      if (li.children[0].checked) li.remove();
     });
   });
 }
