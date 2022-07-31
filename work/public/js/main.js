@@ -50,6 +50,16 @@
     if (!confirm('Are you sure?')) {
       return;
     }
-    purge.parentNode.submit();
+    // purge.parentNode.submit();
+    fetch('?action=purge', {
+      method: 'POST',
+      body: new URLSearchParams({
+        token: purge.dataset.token,
+      }),
+    });
+    const lis = document.querySelectorAll('li');
+    lis.forEach(li => {
+      if (li.children[0].checked) li.remove();
+    });
   });
 }
