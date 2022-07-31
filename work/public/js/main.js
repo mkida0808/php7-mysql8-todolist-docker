@@ -22,6 +22,15 @@
           id: e.target.parentNode.dataset.id,
           token: token,
         }),
+      })
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('This todo has been deleted!');
+        }
+      })
+      .catch(err => {
+        alert(err.message);
+        location.reload();
       });
     }
 
@@ -82,25 +91,5 @@
       });
     input.value = '';
     input.focus();
-  });
-
-  // 全ての削除要素を取得する
-  const deletes = document.querySelectorAll('.delete');
-
-  // リストタイトルの削除に対する送信制御
-  deletes.forEach(span => {
-    span.addEventListener('click', () => {
-      if (!confirm('Are you sure?')) {
-        return;
-      }
-      fetch('?action=delete', {
-        method: 'POST',
-        body: new URLSearchParams({
-          id: span.parentNode.dataset.id,
-          token: token,
-        }),
-      });
-      span.parentNode.remove();
-    });
   });
 }
