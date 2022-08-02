@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../app/config.php');
+require_once(__DIR__ . '/../../../app/dotinstall/php_js_async/config.php');
 
 use MyApp\Database;
 use MyApp\Todo;
