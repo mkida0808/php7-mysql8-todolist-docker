@@ -24,42 +24,29 @@ $todos = $todo->getAll();
 </head>
 
 <body>
-  <main>
+  <!-- トークン関連は一括で取得、送信する -->
+  <main data-token="<?= Utils::h($_SESSION['token']); ?>">
     <header>
       <h1>Todos</h1>
-
       <!-- Todoリスト一覧の一括削除ボタン（チェックボックスにチェックがあるリスト） -->
-      <form action="?action=purge" method="post">
-        <span class="purge">Purge</span>
-        <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-      </form>
+      <span class="purge">Purge</span>
     </header>
 
-    <form action="?action=add" method="post">
+    <!-- Todoリスト一覧に追加する入力フォーム（送信先や送信形式はJSで指定する） -->
+    <form>
       <input type="text" name="title" placeholder="Type new todo.">
-      <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-      <!-- <button>Add</button> -->
     </form>
     <ul>
       <!-- DBから取得したTodoリストを表示 -->
       <?php foreach ($todos as $todo) : ?>
-        <li>
-          <form action="?action=toggle" method="post">
-            <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
-            <!-- どのidの更新を行うかのためidを送信 -->
-            <input type="hidden" name="id" value="<?= Utils::h($todo->id); ?>">
-            <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-          </form>
-          <span class="<?= $todo->is_done ? 'done' : '' ?>">
-            <?= Utils::h($todo->title); ?>
-          </span>
+        <li data-id="<?= Utils::h($todo->id); ?>">
+          <input type="checkbox" <?= $todo->is_done ? 'checked' : '' ?>>
+          <!-- チェックボックスのONOFFの画面振る舞いはCSSに移す  -->
+          <span><?= Utils::h($todo->title); ?></span>
 
-          <form action="?action=delete" method="post" class="delete-form">
-            <span class="delete">x</span>
-            <!-- どのidの更新を行うかのためidを送信 -->
-            <input type="hidden" name="id" value="<?= Utils::h($todo->id); ?>">
-            <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-          </form>
+          <!-- タイトル削除のためのid, tokenをカスタムデータ属性に置き換えてJS制御にまわす  -->
+          <span class="delete">x</span>
+
         </li>
       <?php endforeach; ?>
     </ul>
