@@ -100,4 +100,26 @@
     input.value = '';
     input.focus();
   });
+
+  // チェックしたTodoリストタイトルを一括削除
+  const purge = document.querySelector('.purge');
+
+  purge.addEventListener('click', () => {
+    if (!confirm('Are you sure?')) {
+      return ;
+    }
+    fetch('?action=purge', {
+      method: 'POST',
+      body: new URLSearchParams({
+        token: token,
+      }),
+    });
+    const lis = document.querySelectorAll('li');
+    lis.forEach(li => {
+      if (li.children[0].checked) {
+        li.remove();
+      }
+    });
+  });
+
 }
