@@ -2,8 +2,13 @@
 
 date_default_timezone_set('Asia/Tokyo');
 
-for ($i = 0; $i < 366; $i++):
-  $time = strtotime('+' . $i . ' day');
-  $day = date('n/j(D)', $time);
-  echo $day . '<br>';
-endfor;
+// 日付の扱い
+// for ($i = 0; $i < 366; $i++):
+//   $time = strtotime('+' . $i . ' day');
+//   $day = date('n/j(D)', $time);
+//   echo $day . '<br>';
+// endfor;
+
+// 文字列や数値列の書式（例えば桁数など）を指定する
+$date = sprintf('%04d.%02d.%02d', 2022, 1, 2);
+echo $date;
