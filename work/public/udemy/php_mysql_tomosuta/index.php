@@ -9,15 +9,33 @@ date_default_timezone_set('Asia/Tokyo');
 //   echo $day . '<br>';
 // endfor;
 
+
 // 文字列や数値列の書式（例えば桁数など）を指定する
-$date = sprintf('%04d.%02d.%02d', 2022, 1, 2);
-echo $date;
+// $date = sprintf('%04d.%02d.%02d', 2022, 1, 2);
+// echo $date;
+
 
 // ファイル書き込み
 // file_put_contents('news.txt', 'テキストテキストテキストテキスト');
 
-// ファイル読み込み1
+
+// ファイル読み込み1（ファイルを読み込んでその後ファイルの中身を編集したりする場合に）
 // $news = file_get_contents('news.txt');
 // echo $news;
 
-readfile('news.txt');
+
+// ファイル読み込み2（ただ単に読み込んでブラウザ表示するときに）
+// readfile('news.txt');
+?>
+
+<?php
+// XMLファイル読み込み
+$xmlTree = simplexml_load_file('rss.xml');
+foreach ($xmlTree->channel->item as $item):
+?>
+
+<a href="<?= $item->link; ?>"><?= $item->title . '<br>'; ?></a>
+
+<?php
+endforeach;
+?>
