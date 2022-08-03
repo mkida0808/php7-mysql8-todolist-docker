@@ -64,4 +64,5 @@ $json_sample = [
 $json = json_encode($json_sample, JSON_UNESCAPED_UNICODE);
 // $json = json_encode($json_sample);
 echo $json;
+file_put_contents('json_sample.json', $json);
 ?>
