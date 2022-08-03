@@ -39,3 +39,29 @@ foreach ($xmlTree->channel->item as $item):
 <?php
 endforeach;
 ?>
+
+<?php
+echo '<br>';
+  // JSONファイル読み込み
+  $file = file_get_contents('feed.json');
+  $json = json_decode($file);
+
+  foreach ($json->items as $item):
+?>
+<?= $item->title . '<br>'; ?>
+<?php endforeach; ?>
+
+<?php
+echo '<br>';
+// JSON書き込み
+$json_sample = [
+  "title" => "JSONサンプル",
+  "items" => [
+    "りんご",
+    "みかん",
+  ],
+];
+$json = json_encode($json_sample, JSON_UNESCAPED_UNICODE);
+// $json = json_encode($json_sample);
+echo $json;
+?>
