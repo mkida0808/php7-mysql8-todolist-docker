@@ -19,6 +19,9 @@ require(__DIR__ . '/../../../app/dotinstall/php_webdev/functions.php');
       <option value="pink">pink</option>
       <option value="yellow">yellow</option>
     </select>
+    <label><input type="checkbox" name="animals[]" value="dog">dog</label>
+    <label><input type="checkbox" name="animals[]" value="cat">cat</label>
+    <label><input type="checkbox" name="animals[]" value="monkey">monkey</label>
     <button>SEND2</button>
   </form>
 </body>
