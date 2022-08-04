@@ -1,6 +1,8 @@
+<!-- ヘッダーの読み込み -->
 <?php
 require(__DIR__ . '/../../../app/dotinstall/php_webdev/functions.php');
-// $path = __DIR__;
+include(__DIR__ . '/../../../app/dotinstall/php_webdev/parts/header.php');
+
 $names = [
   'Taro',
   'Jiro',
@@ -8,23 +10,24 @@ $names = [
 ];
 ?>
 
-<!DOCTYPE html>
-<html lang="ja">
+<!-- メイン -->
+<?php if (empty($names)) : ?>
+  <p>配列には空です</p>
+<?php else : ?>
+  <?php foreach ($names as $name) : ?>
+    <li><?php echo h($name); ?></li>
+  <?php endforeach; ?>
+<?php endif; ?>
+<p>Hello, <?= h($name); ?></p>
 
-<head>
-  <meta charset="UTF-8">
-  <title>php web development</title>
-</head>
+<form action="result.php" method="get">
+  <input type="text" name="message">
+  <input type="text" name="username">
+  <button>SEND</button>
+</form>
 
-<body>
-  <?php if (empty($names)) : ?>
-    <p>配列には空です</p>
-  <?php else : ?>
-    <?php foreach ($names as $name) : ?>
-      <li><?php echo h($name); ?></li>
-    <?php endforeach; ?>
-  <?php endif; ?>
-  <p>Hello, <?= h($name); ?></p>
-</body>
 
-</html>
+<!-- フッターの読み込み -->
+<?php
+include(__DIR__ . '/../../../app/dotinstall/php_webdev/parts/footer.php');
+?>
