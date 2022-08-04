@@ -6,4 +6,4 @@
   <title>php web development</title>
 </head>
 
-<body>
+<body style="background-color: <?php echo h($color); ?>;">
