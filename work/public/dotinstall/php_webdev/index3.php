@@ -1,5 +1,6 @@
 <?php
 require(__DIR__ . '/../../../app/dotinstall/php_webdev/functions.php');
+$color = filter_input(INPUT_COOKIE, $color) ?? 'transparent';
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@ require(__DIR__ . '/../../../app/dotinstall/php_webdev/functions.php');
   <title>radiobox</title>
 </head>
 
-<body>
+<body style="background-color: <?= h($color); ?>">
   <form action="result3.php" method="post">
     <label><input type="radio" name="color" value="orange"> orange</label>
     <label><input type="radio" name="color" value="pink"> pink</label>

@@ -7,7 +7,9 @@ require(__DIR__ . '/../../../app/dotinstall/php_webdev/functions.php');
 // $color = empty($color) ? 'None Selected Color.' : $color;
 // $color = isset($color) ? $color : 'None selected (!isset)';
 // $color = $color ?? 'None selected (null型演算子)';
-$color = filter_input(INPUT_POST, 'color') ?? 'None selected (null型演算子)';
+// $color = filter_input(INPUT_POST, 'color') ?? 'None selected (null型演算子)';
+$color = filter_input(INPUT_POST, 'color') ?? 'transparent';
+setcookie('color', $color);
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +22,9 @@ $color = filter_input(INPUT_POST, 'color') ?? 'None selected (null型演算子)'
   <title>radio</title>
 </head>
 
-<body>
+<body style="background-color: <?= h($color); ?>">
     <p><?= nl2br(h($color)); ?></p>
+    <p><a href="index3.php">戻る</a></p>
 </body>
 
 </html>
