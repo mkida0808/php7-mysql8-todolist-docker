@@ -21,11 +21,11 @@ $names = [
 <p>Hello, <?= h($name); ?></p>
 
 <form action="result.php" method="get">
-  <input type="text" name="message">
+  <!-- <input type="text" name="message"> -->
   <input type="text" name="username">
+  <textarea name="message"></textarea>
   <button>SEND</button>
 </form>
-
 
 <!-- フッターの読み込み -->
 <?php
