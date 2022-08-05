@@ -15,7 +15,7 @@ class Post
 
   public function show()
   {
-    echo $this->message . '(' . $this->likes . ')' . PHP_EOL ;
+    echo $this->message . '(' . $this->likes . ')' . PHP_EOL;
   }
 }
 
@@ -71,49 +71,55 @@ try {
   $stmt->bindValue('likes', $likes, \PDO::PARAM_INT);
   $stmt->execute();
 
-    // 最後に挿入したデータのIDを取得
-    echo $pdo->lastInsertID() . PHP_EOL;
+  // 最後に挿入したデータのIDを取得
+  echo $pdo->lastInsertID() . PHP_EOL;
 
-    // データを挿入
-    $message = 'Danke';
-    $likes = 11;
+  // データを挿入
+  $message = 'Danke';
+  $likes = 11;
 
-    // データを挿入後、明示的に面数に対して型を指定する（同じプリペアードステートメントを実行する場合、記述は省略できる）
-    // ただし、データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
-    $stmt->bindParam('message', $message, \PDO::PARAM_STR);
-    $stmt->bindParam('likes', $likes, \PDO::PARAM_INT);
-    $stmt->execute();
+  // データを挿入後、明示的に面数に対して型を指定する（同じプリペアードステートメントを実行する場合、記述は省略できる）
+  // ただし、データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
+  $stmt->bindParam('message', $message, \PDO::PARAM_STR);
+  $stmt->bindParam('likes', $likes, \PDO::PARAM_INT);
+  $stmt->execute();
 
-    // 最後に挿入したデータのIDを取得
-    echo $pdo->lastInsertID() . PHP_EOL;
+  // 最後に挿入したデータのIDを取得
+  echo $pdo->lastInsertID() . PHP_EOL;
 
-    // データを挿入
-    $message = 'Gracias';
-    $likes = 123;
+  // データを挿入
+  $message = 'Gracias';
+  $likes = 123;
 
-    // データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
-    $stmt->execute();
+  // データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
+  $stmt->execute();
 
-    // 最後に挿入したデータのIDを取得
-    echo $pdo->lastInsertID() . PHP_EOL;
+  // 最後に挿入したデータのIDを取得
+  echo $pdo->lastInsertID() . PHP_EOL;
 
-  // 単にクエリを実行したい場合（オブジェクトで返ってくる）
-  $stmt = $pdo->query("select * from posts");
-
-  // 単数を配列変換する場合
-  // $result = $pdoStmt->fetch();
-  // 単数を配列変換する場合
-  $posts = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Post');
-
-  // 見やすい表記で画面出力
-  foreach ($posts as $post)
-  {
-    // printf('[%d] %s (%d)' . PHP_EOL, $post['id'], $post['message'], $post['likes']);
-    // クラスから呼び出す場合
-    $post->show();
-  }
-
+  // トランザクション処理の例
+  $pdo->beginTransaction();
+  $pdo->query("update posts set likes = likes + 1 where id = 1");
+  $pdo->query("update posts set likes = likes - 1 where id = 2");
+  $pdo->commit();
 } catch (\PDOException $e) {
+  // 更新処理の際にエラーが出た場合にロールバック（元に戻す）
+  $pdo->rollBack();
   echo $e->getMessage() . PHP_EOL;
-  exit;
+  // exit;
+} finally {
+    // 単にクエリを実行したい場合（オブジェクトで返ってくる）
+    $stmt = $pdo->query("select * from posts");
+
+    // 単数を配列変換する場合
+    // $result = $pdoStmt->fetch();
+    // 単数を配列変換する場合
+    $posts = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Post');
+
+    // 見やすい表記で画面出力
+    foreach ($posts as $post) {
+      // printf('[%d] %s (%d)' . PHP_EOL, $post['id'], $post['message'], $post['likes']);
+      // クラスから呼び出す場合
+      $post->show();
+    }
 }
