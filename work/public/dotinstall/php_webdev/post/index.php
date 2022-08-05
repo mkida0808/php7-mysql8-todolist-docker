@@ -2,9 +2,13 @@
 require('../../../../app/dotinstall/php_webdev/functions.php');
 include('../../../../app/dotinstall/php_webdev/parts/header.php');
 
+createToken();
+
 define('FILENAME', '../../../../app/dotinstall/php_webdev/messages.txt');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  validateToken();
+
   $message = trim(filter_input(INPUT_POST, 'message'));
   $message = $message !== '' ? $message : '...';
 
@@ -28,6 +32,7 @@ $messages = file(FILENAME, FILE_IGNORE_NEW_LINES);
 
 <form action="" method="post">
   <input type="text" name="message">
+  <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
   <button>Send</button>
 </form>
 
