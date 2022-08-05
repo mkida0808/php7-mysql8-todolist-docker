@@ -14,7 +14,7 @@ try {
     [
       \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
       // \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-      // \PDO::ATTR_EMULATE_PREPARES => false,
+      \PDO::ATTR_EMULATE_PREPARES => false,
       \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
     ]
   );
@@ -29,10 +29,21 @@ try {
       )"
   );
 
-  $pdoStmt = $pdo->query("show tables");
-  $result = $pdoStmt->fetch();
-  var_dump($result);
+  $pdo->query("insert into posts (message, likes) values
+    ('Thanks', 12),
+    ('thanks', 4),
+    ('arigatou', 15)
+  ");
+
+  $pdoStmt = $pdo->query("select * from posts");
+
+  // 単数を配列変換する場合
+  // $result = $pdoStmt->fetch();
+  // 単数を配列変換する場合
+  $results = $pdoStmt->fetchAll();
+
+  var_dump($results);
 } catch (\PDOException $e) {
-  echo $e->getMessage();
+  echo $e->getMessage() . PHP_EOL;
   exit;
 }
