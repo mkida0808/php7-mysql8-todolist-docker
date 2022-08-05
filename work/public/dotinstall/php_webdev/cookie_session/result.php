@@ -1,12 +1,13 @@
 <?php
 require('../../../../app/dotinstall/php_webdev/functions.php');
 
-$color = filter_input(INPUT_GET, 'color') ?? 'transparent';
+$colorFromGet = filter_input(INPUT_GET, 'color') ?? 'transparent';
+setcookie('color', $colorFromGet);
 
 include('../../../../app/dotinstall/php_webdev/parts/header.php');
 ?>
 
-  <p><?= h($color); ?></p>
+  <p><?= h($colorFromGet); ?></p>
   <p><a href="index.php">Go back</a></p>
 
 <?php
