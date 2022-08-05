@@ -37,18 +37,23 @@ try {
 
   $label = '[Good!]';
   // プリペアードステートメント（クエリに値を受け込む場合）
-  $n = 10;
-  $stmt = $pdo->prepare("update posts set message = concat(:label, message) where likes > :n");
-  $stmt->execute(['label' => $label, 'n' => $n]);
+  // $n = 10;
+  // $stmt = $pdo->prepare("update posts set message = concat(:label, message) where likes > :n");
+  // $stmt->execute(['label' => $label, 'n' => $n]);
+  // echo $stmt->rowCount() . ' records update' . PHP_EOL;
 
-  echo $stmt->rowCount() . ' records update' . PHP_EOL;
+  // 文字列検索
+  $search = 't%';
+  $stmt = $pdo->prepare("select * from posts where message like :search");
+  $stmt->execute(['search' => $search]);
 
-  $pdoStmt = $pdo->query("select * from posts");
+  // 単にクエリを実行したい場合（オブジェクトで返ってくる）
+  // $pdoStmt = $pdo->query("select * from posts");
 
   // 単数を配列変換する場合
   // $result = $pdoStmt->fetch();
   // 単数を配列変換する場合
-  $posts = $pdoStmt->fetchAll();
+  $posts = $stmt->fetchAll();
 
   // 見やすい表記で画面出力
   foreach ($posts as $post)
