@@ -58,6 +58,9 @@ try {
   $stmt->bindValue('likes', $likes, \PDO::PARAM_INT);
   $stmt->execute();
 
+    // 最後に挿入したデータのIDを取得
+    echo $pdo->lastInsertID() . PHP_EOL;
+
     // データを挿入
     $message = 'Danke';
     $likes = 11;
@@ -68,12 +71,18 @@ try {
     $stmt->bindParam('likes', $likes, \PDO::PARAM_INT);
     $stmt->execute();
 
+    // 最後に挿入したデータのIDを取得
+    echo $pdo->lastInsertID() . PHP_EOL;
+
     // データを挿入
     $message = 'Gracias';
     $likes = 123;
 
     // データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
     $stmt->execute();
+
+    // 最後に挿入したデータのIDを取得
+    echo $pdo->lastInsertID() . PHP_EOL;
 
   // 単にクエリを実行したい場合（オブジェクトで返ってくる）
   $stmt = $pdo->query("select * from posts");
@@ -86,7 +95,7 @@ try {
   // 見やすい表記で画面出力
   foreach ($posts as $post)
   {
-    printf('%s (%d)' . PHP_EOL, $post['message'], $post['likes']);
+    printf('[%d] %s (%d)' . PHP_EOL, $post['id'], $post['message'], $post['likes']);
   }
 
 } catch (\PDOException $e) {
