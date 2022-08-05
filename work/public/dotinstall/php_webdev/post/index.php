@@ -2,7 +2,22 @@
 require('../../../../app/dotinstall/php_webdev/functions.php');
 include('../../../../app/dotinstall/php_webdev/parts/header.php');
 
-$messages = file('../../../../app/dotinstall/php_webdev/messages.txt', FILE_IGNORE_NEW_LINES);
+define('FILENAME', '../../../../app/dotinstall/php_webdev/messages.txt');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $message = trim(filter_input(INPUT_POST, 'message'));
+  $message = $message !== '' ? $message : '...';
+
+  $fp = fopen(FILENAME, 'a');
+  fwrite($fp, $message . "\n");
+  fclose($fp);
+
+  header('Location: http://localhost:8562/dotinstall/php_webdev/post/result.php');
+  exit;
+}
+
+$messages = file(FILENAME, FILE_IGNORE_NEW_LINES);
+
 ?>
 
 <ul>
@@ -11,7 +26,7 @@ $messages = file('../../../../app/dotinstall/php_webdev/messages.txt', FILE_IGNO
 <?php endforeach; ?>
 </ul>
 
-<form action="result.php" method="post">
+<form action="" method="post">
   <input type="text" name="message">
   <button>Send</button>
 </form>
