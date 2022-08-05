@@ -8,6 +8,9 @@ include('../../../../app/dotinstall/php_webdev/parts/header.php');
   <label><input type="radio" name="color" value="pink"> Pink</label>
   <label><input type="radio" name="color" value="gold"> Gold</label>
   <button>Send</button>
+  <div>
+    <a href="reset.php">[reset cookie]</a>
+  </div>
 </form>
 
 <?php
