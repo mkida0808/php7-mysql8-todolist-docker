@@ -43,12 +43,23 @@ try {
   // echo $stmt->rowCount() . ' records update' . PHP_EOL;
 
   // 文字列検索
-  $search = 't%';
-  $stmt = $pdo->prepare("select * from posts where message like :search");
-  $stmt->execute(['search' => $search]);
+  // $search = 't%';
+  // $stmt = $pdo->prepare("select * from posts where message like :search");
+  // $stmt->execute(['search' => $search]);
+
+
+  // データを挿入
+  $message = 'Merci';
+  $likes = 8;
+  $stmt = $pdo->prepare("insert into posts (message, likes) values (:message, :likes)");
+
+  // データを挿入後、明示的に面数に対して型を指定する
+  $stmt->bindValue('message', $message, \PDO::PARAM_STR);
+  $stmt->bindValue('likes', $likes, \PDO::PARAM_INT);
+  $stmt->execute();
 
   // 単にクエリを実行したい場合（オブジェクトで返ってくる）
-  // $pdoStmt = $pdo->query("select * from posts");
+  $stmt = $pdo->query("select * from posts");
 
   // 単数を配列変換する場合
   // $result = $pdoStmt->fetch();
