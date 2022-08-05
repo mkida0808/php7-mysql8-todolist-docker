@@ -35,6 +35,14 @@ try {
     ('arigatou', 15)
   ");
 
+  $label = '[Good!]';
+  // プリペアードステートメント（クエリに値を受け込む場合）
+  $n = 10;
+  $stmt = $pdo->prepare("update posts set message = concat(:label, message) where likes > :n");
+  $stmt->execute(['label' => $label, 'n' => $n]);
+
+  echo $stmt->rowCount() . ' records update' . PHP_EOL;
+
   $pdoStmt = $pdo->query("select * from posts");
 
   // 単数を配列変換する場合
