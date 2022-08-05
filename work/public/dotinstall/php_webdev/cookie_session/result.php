@@ -2,7 +2,8 @@
 require('../../../../app/dotinstall/php_webdev/functions.php');
 
 $colorFromGet = filter_input(INPUT_GET, 'color') ?? 'transparent';
-setcookie('color', $colorFromGet);
+// setcookie('color', $colorFromGet);
+$_SESSION['color'] = $colorFromGet;
 
 include('../../../../app/dotinstall/php_webdev/parts/header.php');
 ?>
