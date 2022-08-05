@@ -40,9 +40,14 @@ try {
   // 単数を配列変換する場合
   // $result = $pdoStmt->fetch();
   // 単数を配列変換する場合
-  $results = $pdoStmt->fetchAll();
+  $posts = $pdoStmt->fetchAll();
 
-  var_dump($results);
+  // 見やすい表記で画面出力
+  foreach ($posts as $post)
+  {
+    printf('%s (%d)' . PHP_EOL, $post['message'], $post['likes']);
+  }
+
 } catch (\PDOException $e) {
   echo $e->getMessage() . PHP_EOL;
   exit;
