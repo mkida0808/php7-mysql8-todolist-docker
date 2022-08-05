@@ -53,10 +53,27 @@ try {
   $likes = 8;
   $stmt = $pdo->prepare("insert into posts (message, likes) values (:message, :likes)");
 
-  // データを挿入後、明示的に面数に対して型を指定する
+  // データを挿入後、明示的に面数に対して型を指定する（同じプリペアードステートメントを実行する場合、記述は省略できる）
   $stmt->bindValue('message', $message, \PDO::PARAM_STR);
   $stmt->bindValue('likes', $likes, \PDO::PARAM_INT);
   $stmt->execute();
+
+    // データを挿入
+    $message = 'Danke';
+    $likes = 11;
+
+    // データを挿入後、明示的に面数に対して型を指定する（同じプリペアードステートメントを実行する場合、記述は省略できる）
+    // ただし、データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
+    $stmt->bindParam('message', $message, \PDO::PARAM_STR);
+    $stmt->bindParam('likes', $likes, \PDO::PARAM_INT);
+    $stmt->execute();
+
+    // データを挿入
+    $message = 'Gracias';
+    $likes = 123;
+
+    // データを挿入後時、bindParamを技術することでbindValueの定義を省略できる
+    $stmt->execute();
 
   // 単にクエリを実行したい場合（オブジェクトで返ってくる）
   $stmt = $pdo->query("select * from posts");
