@@ -6,6 +6,19 @@ define('DB_PASS', 'myapppass');
 // サーバー変数からサイトURL（ドメイン）を取得、定義する
 define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 
+class Post
+{
+  // publicの場合だけ省略出来る
+  // public $id;
+  // public $message;
+  // public $likes;
+
+  public function show()
+  {
+    echo $this->message . '(' . $this->likes . ')' . PHP_EOL ;
+  }
+}
+
 try {
   $pdo = new \PDO(
     DSN,
@@ -90,12 +103,14 @@ try {
   // 単数を配列変換する場合
   // $result = $pdoStmt->fetch();
   // 単数を配列変換する場合
-  $posts = $stmt->fetchAll();
+  $posts = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Post');
 
   // 見やすい表記で画面出力
   foreach ($posts as $post)
   {
-    printf('[%d] %s (%d)' . PHP_EOL, $post['id'], $post['message'], $post['likes']);
+    // printf('[%d] %s (%d)' . PHP_EOL, $post['id'], $post['message'], $post['likes']);
+    // クラスから呼び出す場合
+    $post->show();
   }
 
 } catch (\PDOException $e) {
