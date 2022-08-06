@@ -1,5 +1,17 @@
 <?php
 
+// トレイト
+trait LikeTrait
+{
+  private $likes = 0;
+
+  // インターフェースを実装
+  public function like()
+  {
+    $this->likes++;
+  }
+}
+
 // インターフェースを定義（ここではlikeメソッド）
 interface LikeInterface
 {
@@ -22,18 +34,14 @@ abstract class BasePost
 
 class Post extends BasePost implements LikeInterface // インターフェースを実装
 {
-  private $likes = 0;
+  // トレイトを呼び出し
+  use LikeTrait;
+
   // final修飾子はメソッドのオーバーライドを禁止する
   // final public function show()
   public function show()
   {
     printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
-  }
-
-  // インターフェースを実装
-  public function like()
-  {
-    $this->likes++;
   }
 }
 
@@ -61,8 +69,9 @@ class SponsoredPost extends BasePost
 
 class PremiumPost extends BasePost implements LikeInterface // インターフェースを実装
 {
+  // トレイトを呼び出し
+  use LikeTrait;
   private $price;
-  private $likes = 0;
 
   public function __construct($text, $price)
   {
@@ -74,12 +83,6 @@ class PremiumPost extends BasePost implements LikeInterface // インターフ�
   public function show()
   {
     printf('%s (%d) [%d JPY]' . PHP_EOL, $this->text, $this->likes, $this->price);
-  }
-
-  // インターフェースを実装
-  public function like()
-  {
-    $this->likes++;
   }
 }
 
