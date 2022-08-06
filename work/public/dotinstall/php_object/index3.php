@@ -46,10 +46,28 @@ class SponsoredPost extends BasePost // 子クラス（サブクラス）
   }
 }
 
+class PremiumPost extends BasePost // 子クラス（サブクラス）
+{
+  private $price;
+
+  public function __construct($text, $price)
+  {
+    parent::__construct($text);
+    $this->price = $price;
+  }
+
+  // メソッドのオーバーライド
+  public function show()
+  {
+    printf('%s [%d JPY]' . PHP_EOL, $this->text ,$this->price);
+  }
+}
+
 $posts = [];
 $posts[0] = new Post('text000');
 $posts[1] = new Post('text001');
 $posts[2] = new SponsoredPost('texttext', 'sponsorsponsor');
+$posts[3] = new PremiumPost('texttexttext', 5600);
 
 // オブジェクト型の継承（PostだけではなくsponsoredPostも継承する）
 function processPost(BasePost $post)
