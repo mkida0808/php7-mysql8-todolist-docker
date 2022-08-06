@@ -1,5 +1,11 @@
 <?php
 
+// インターフェースを定義（ここではlikeメソッド）
+interface LikeInterface
+{
+  public function like();
+}
+
 // 抽象クラス（子クラスに以下のメソッドを必ず明記する）
 abstract class BasePost
 {
@@ -14,17 +20,24 @@ abstract class BasePost
   abstract public function show();
 }
 
-class Post extends BasePost // 親クラス（スーパークラス）
+class Post extends BasePost implements LikeInterface // インターフェースを実装
 {
+  private $likes = 0;
   // final修飾子はメソッドのオーバーライドを禁止する
   // final public function show()
   public function show()
   {
-    printf('%s' . PHP_EOL, $this->text);
+    printf('%s (%d)' . PHP_EOL, $this->text, $this->likes);
+  }
+
+  // インターフェースを実装
+  public function like()
+  {
+    $this->likes++;
   }
 }
 
-class SponsoredPost extends BasePost // 子クラス（サブクラス）
+class SponsoredPost extends BasePost
 {
   private $sponsor;
 
@@ -46,9 +59,10 @@ class SponsoredPost extends BasePost // 子クラス（サブクラス）
   }
 }
 
-class PremiumPost extends BasePost // 子クラス（サブクラス）
+class PremiumPost extends BasePost implements LikeInterface // インターフェースを実装
 {
   private $price;
+  private $likes = 0;
 
   public function __construct($text, $price)
   {
@@ -59,7 +73,13 @@ class PremiumPost extends BasePost // 子クラス（サブクラス）
   // メソッドのオーバーライド
   public function show()
   {
-    printf('%s [%d JPY]' . PHP_EOL, $this->text ,$this->price);
+    printf('%s (%d) [%d JPY]' . PHP_EOL, $this->text, $this->likes, $this->price);
+  }
+
+  // インターフェースを実装
+  public function like()
+  {
+    $this->likes++;
   }
 }
 
@@ -79,6 +99,8 @@ function processPost(BasePost $post)
 // $posts[1]->show();
 // $posts[2]->show();
 // $posts[2]->showSponsor();
+$posts[0]->like();
+$posts[3]->like();
 
 // Post型の表示
 foreach ($posts as $post)
