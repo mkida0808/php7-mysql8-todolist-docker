@@ -89,6 +89,15 @@ $posts[1] = new Post('text001');
 $posts[2] = new SponsoredPost('texttext', 'sponsorsponsor');
 $posts[3] = new PremiumPost('texttexttext', 5600);
 
+// インターフェースの型継承
+function processLikeable(LikeInterface $likeable)
+{
+  $likeable->like();
+}
+
+processLikeable($posts[0]);
+processLikeable($posts[3]);
+
 // オブジェクト型の継承（PostだけではなくsponsoredPostも継承する）
 function processPost(BasePost $post)
 {
