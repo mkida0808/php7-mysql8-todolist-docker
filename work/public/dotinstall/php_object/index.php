@@ -9,10 +9,12 @@ class Post
   // プロパティ
   private $text;
   private $likes = 0;
+  private static $count = 0;
 
   public function __construct(string $text)
   {
     $this->text = $text;
+    self::$count++;
   }
 
   // メソッド
@@ -29,6 +31,11 @@ class Post
       $this->likes = 100;
     }
   }
+
+  public static function showInfo()
+  {
+    printf('Count: %d' . PHP_EOL, self::$count);
+  }
 }
 
 $posts[0] = new Post('123123123'); // インスタンス
@@ -39,3 +46,5 @@ $posts[1]->like();
 
 $posts[0]->show();
 $posts[1]->show();
+
+Post::showInfo();
